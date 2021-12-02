@@ -1,15 +1,17 @@
-move1 [hor,depth] (dir,ammount)
-  | dir == "forward" = [hor+ammount,depth]
-  | dir == "down" = [hor,depth+ammount]
-  | dir == "up" = [hor,depth-ammount]
+move1 [hor,depth] (dir,amount)
+  | dir == "forward" = [hor+amount,depth]
+  | dir == "down" = [hor,depth+amount]
+  | dir == "up" = [hor,depth-amount]
 
-move2 [hor,depth,aim] (dir,ammount)
-  | dir == "forward" = [hor+ammount,depth+aim*ammount,aim]
-  | dir == "down" = [hor,depth,aim+ammount]
-  | dir == "up" = [hor,depth,aim-ammount]
+move2 [hor,depth,aim] (dir,amount)
+  | dir == "forward" = [hor+amount,depth+aim*amount,aim]
+  | dir == "down" = [hor,depth,aim+amount]
+  | dir == "up" = [hor,depth,aim-amount]
 
-star1 = product . foldl move1 [0,0]
-star2 = product . init . foldl move2 [0,0,0]
+star move list = product . take 2 . foldl move list
+
+star1 = star move1 [0,0]
+star2 = star move2 [0,0,0]
 
 main :: IO ()
 main = do
