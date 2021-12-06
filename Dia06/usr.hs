@@ -1,6 +1,5 @@
 import qualified Data.Map as M
 import qualified Data.Sequence as S
-import Data.Maybe (fromJust)
 
 split = foldr (\c acc@(y:ys) -> if c == ',' then []:acc else (c:y):ys) [[]]
 
@@ -16,7 +15,6 @@ star s n = foldr1 (+) $ foldr (\_ acc -> rotateAndAdd acc) s [1..n]
 main :: IO ()
 main = do
   contents <- getContents
-  let fish = toMap $ map read $ split contents
-  let sq = S.fromList $ M.elems fish
-  putStrLn $ "Star 1: " ++ (show $ star sq 80)
-  putStrLn $ "Star 2: " ++ (show $ star sq 256)
+  let fish = S.fromList $ M.elems $ toMap $ map read $ split contents
+  putStrLn $ "Star 1: " ++ (show $ star fish 80)
+  putStrLn $ "Star 2: " ++ (show $ star fish 256)
